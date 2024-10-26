@@ -9,31 +9,66 @@
         </p>
     </header>
 
-    <form id="send-verification" method="post" action="{{ route('verification.send') }}">
+    <form action="{{ route('verification.send') }}" id="send-verification" method="post">
         @csrf
     </form>
 
-    <form method="post" action="{{ route('profile.update') }}" class="mt-6 space-y-6">
+    <form action="{{ route('profile.update') }}" class="mt-6 space-y-6" method="post">
         @csrf
         @method('patch')
 
         <div>
-            <x-input-label for="name" :value="__('Name')" />
-            <x-text-input id="name" name="name" type="text" class="mt-1 block w-full" :value="old('name', $user->name)" required autofocus autocomplete="name" />
-            <x-input-error class="mt-2" :messages="$errors->get('name')" />
+            <x-input-label :value="__('First Name')" for="first_name" />
+            <x-text-input
+                :value="old('first_name', $user->first_name)"
+                autocomplete="first_name"
+                autofocus
+                class="mt-1 block w-full"
+                id="first_name"
+                name="first_name"
+                required
+                type="text"
+            />
+            <x-input-error :messages="$errors->get('name')" class="mt-2" />
         </div>
 
         <div>
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" name="email" type="email" class="mt-1 block w-full" :value="old('email', $user->email)" required autocomplete="username" />
-            <x-input-error class="mt-2" :messages="$errors->get('email')" />
+            <x-input-label :value="__('Last Name')" for="last_name" />
+            <x-text-input
+                :value="old('last_name', $user->last_name)"
+                autocomplete="last_name"
+                autofocus
+                class="mt-1 block w-full"
+                id="last_name"
+                name="last_name"
+                required
+                type="text"
+            />
+            <x-input-error :messages="$errors->get('name')" class="mt-2" />
+        </div>
 
-            @if ($user instanceof \Illuminate\Contracts\Auth\MustVerifyEmail && ! $user->hasVerifiedEmail())
+        <div>
+            <x-input-label :value="__('Email')" for="email" />
+            <x-text-input
+                :value="old('email', $user->email)"
+                autocomplete="username"
+                class="mt-1 block w-full"
+                id="email"
+                name="email"
+                required
+                type="email"
+            />
+            <x-input-error :messages="$errors->get('email')" class="mt-2" />
+
+            @if ($user instanceof \Illuminate\Contracts\Auth\MustVerifyEmail && !$user->hasVerifiedEmail())
                 <div>
                     <p class="text-sm mt-2 text-gray-800">
                         {{ __('Your email address is unverified.') }}
 
-                        <button form="send-verification" class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                        <button
+                            class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                            form="send-verification"
+                        >
                             {{ __('Click here to re-send the verification email.') }}
                         </button>
                     </p>
@@ -52,11 +87,11 @@
 
             @if (session('status') === 'profile-updated')
                 <p
+                    class="text-sm text-gray-600"
                     x-data="{ show: true }"
+                    x-init="setTimeout(() => show = false, 2000)"
                     x-show="show"
                     x-transition
-                    x-init="setTimeout(() => show = false, 2000)"
-                    class="text-sm text-gray-600"
                 >{{ __('Saved.') }}</p>
             @endif
         </div>
