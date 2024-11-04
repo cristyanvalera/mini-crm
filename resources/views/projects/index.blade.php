@@ -1,3 +1,5 @@
+@use('App\Enums\PermissionEnum')
+
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
@@ -64,6 +66,7 @@
                                             >
                                                 Edit
                                             </a>
+                                            @can(PermissionEnum::DeleteProjects)
                                             |
                                             <form
                                                 class="inline-block"
@@ -79,6 +82,7 @@
                                                     Delete
                                                 </button>
                                             </form>
+                                            @endcan
                                         </td>
                                     </tr>
                                 @endforeach

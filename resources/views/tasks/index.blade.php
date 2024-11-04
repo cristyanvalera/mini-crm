@@ -1,3 +1,5 @@
+@use('App\Enums\PermissionEnum')
+
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
@@ -64,21 +66,23 @@
                                             >
                                                 Edit
                                             </a>
-                                            |
-                                            <form
-                                                class="inline-block"
-                                                method="post"
-                                                action="{{ route('tasks.destroy', $task) }}"
-                                                onsubmit="
-                                                    return confirm('Are you sure to delete this record?\nThis action cannot be undome')
-                                                "
-                                            >
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="text-red-500 hover:underline">
-                                                    Delete
-                                                </button>
-                                            </form>
+                                            @can(PermissionEnum::DeleteTasks)
+                                                |
+                                                <form
+                                                    class="inline-block"
+                                                    method="post"
+                                                    action="{{ route('tasks.destroy', $task) }}"
+                                                    onsubmit="
+                                                        return confirm('Are you sure to delete this record?\nThis action cannot be undome')
+                                                    "
+                                                >
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="text-red-500 hover:underline">
+                                                        Delete
+                                                    </button>
+                                                </form>
+                                            @endcan
                                         </td>
                                     </tr>
                                 @endforeach
