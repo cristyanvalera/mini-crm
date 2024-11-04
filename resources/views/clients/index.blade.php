@@ -10,9 +10,9 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
                     <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-                        <a class="font-medium text-blue-700 dark:text-blue-600 hover:underline"
-                            href="{{ route('clients.create') }}"
-                        >Add new client</a>
+                        <a class="font-medium text-blue-700 dark:text-blue-600 hover:underline" href="{{ route('clients.create') }}">
+                            Add new client
+                        </a>
 
                         <table class="w-full text-sm text-left mt-4 rtl:text-right text-gray-500 dark:text-gray-400">
                             <thead
@@ -45,7 +45,7 @@
                                         >
                                             {{ $client->id }}
                                         </th>
-                                        <td class="px-6 py-4 uppercase">
+                                        <td class="px-6 py-4">
                                             {{ $client->company_name }}
                                         </td>
                                         <td class="px-6 py-4">
