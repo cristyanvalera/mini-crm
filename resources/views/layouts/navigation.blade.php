@@ -1,3 +1,5 @@
+@use('App\Enums\PermissionEnum')
+
 <nav class="bg-white border-b border-gray-100" x-data="{ open: false }">
     <!-- Primary Navigation Menu -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -16,11 +18,11 @@
                         {{ __('Dashboard') }}
                     </x-nav-link>
 
-                    @role(\App\Enums\Role::Admin)
+                    @can(PermissionEnum::ManageUsers->value)
                         <x-nav-link :active="request()->routeIs('users.*')" :href="route('users.index')">
                             {{ __('Users') }}
                         </x-nav-link>
-                    @endrole
+                    @endcan
 
                     <x-nav-link :active="request()->routeIs('clients.*')" :href="route('clients.index')">
                         {{ __('Clients') }}
@@ -117,11 +119,11 @@
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
 
-            @role(\App\Enums\Role::Admin)
+            @can(PermissionEnum::ManageUsers->value)
                 <x-responsive-nav-link :active="request()->routeIs('users.*')" :href="route('users.index')">
                     {{ __('Users') }}
                 </x-responsive-nav-link>
-            @endrole
+            @endcan
 
             <x-responsive-nav-link :active="request()->routeIs('clients.*')" :href="route('clients.index')">
                 {{ __('Clients') }}
