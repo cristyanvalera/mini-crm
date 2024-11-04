@@ -32,7 +32,7 @@
                             <!-- Deadline -->
                             <div class="mt-4">
                                 <x-input-label :value="__('Deadline')" for="deadline_at" />
-                                <x-text-input :value="old('deadline_at')" autocomplete="phone_number" class="block mt-1 w-full" id="deadline_at" name="deadline_at" type="date" />
+                                <x-text-input :value="old('deadline_at')" class="block mt-1 w-full" id="deadline_at" name="deadline_at" type="date" />
                                 <x-input-error :messages="$errors->get('deadline_at')" class="mt-2" />
                             </div>
 

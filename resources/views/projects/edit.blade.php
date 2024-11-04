@@ -76,6 +76,7 @@
                                 <x-input-error :messages="$errors->get('status')" class="mt-2" />
                             </div>
 
+                            <!-- Buttons -->
                             <div class="flex items-center justify-end mt-4">
                                 <x-link-button href="{{ route('projects.index') }}">
                                     {{ __('Back') }}
