@@ -23,7 +23,7 @@ class TaskFactory extends Factory
             'user_id' => $users->random(),
             'client_id' => $clients->random(),
             'project_id' => $projects->random(),
-            'deadline_at' => now()->addDays(rand(1, 30))->format('d-m-Y'),
+            'deadline_at' => fake()->dateTimeBetween('+1 month', '+6 month'),
             'status' => fake()->randomElement(TaskStatus::cases())->value,
         ];
     }
