@@ -11,11 +11,11 @@ class TaskController extends Controller
 {
     public function index(): View
     {
-        return view('tasks.index', [
-            'tasks' => Task::query()
-                ->select(['id', 'title', 'description', 'status', 'deadline_at'])
-                ->paginate(10),
-        ]);
+        $tasks = Task::query()
+            ->select(['id', 'title', 'description', 'status', 'deadline_at'])
+            ->paginate(10);
+
+        return view('tasks.index', compact('tasks'));
     }
 
     public function create(): View
@@ -43,9 +43,11 @@ class TaskController extends Controller
         return view('tasks.edit', compact('task', 'users', 'clients', 'projects'));
     }
 
-    public function update(UpdateTaskRequest $request, Task $task)
+    public function update(UpdateTaskRequest $request, Task $task): RedirectResponse
     {
-        //
+        $task->update($request->validated());
+
+        return to_route('tasks.index');
     }
 
     public function destroy(Task $task): RedirectResponse
