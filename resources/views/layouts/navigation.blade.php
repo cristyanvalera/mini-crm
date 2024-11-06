@@ -18,7 +18,7 @@
                         {{ __('Dashboard') }}
                     </x-nav-link>
 
-                    @can(PermissionEnum::ManageUsers->value)
+                    @can(PermissionEnum::ManageUsers)
                         <x-nav-link :active="request()->routeIs('users.*')" :href="route('users.index')">
                             {{ __('Users') }}
                         </x-nav-link>
@@ -119,7 +119,7 @@
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
 
-            @can(PermissionEnum::ManageUsers->value)
+            @can(PermissionEnum::ManageUsers)
                 <x-responsive-nav-link :active="request()->routeIs('users.*')" :href="route('users.index')">
                     {{ __('Users') }}
                 </x-responsive-nav-link>
