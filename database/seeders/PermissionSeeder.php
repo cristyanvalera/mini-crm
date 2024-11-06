@@ -6,8 +6,7 @@ use App\Enums\PermissionEnum;
 use App\Enums\Role as EnumsRole;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use Spatie\Permission\Models\Permission;
-use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\{Permission, Role};
 
 class PermissionSeeder extends Seeder
 {
