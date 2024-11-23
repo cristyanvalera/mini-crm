@@ -17,10 +17,14 @@
                     </x-nav-link>
 
                     @role(\App\Enums\RoleEnum::Admin)
-                        <x-nav-link :href="route('users.index')" :active="request()->routeIs('users.index')">
+                        <x-nav-link :href="route('users.index')" :active="request()->routeIs('users.*')">
                             {{ __('Users') }}
                         </x-nav-link>
                     @endrole
+
+                    <x-nav-link :href="route('clients.index')" :active="request()->routeIs('clients.*')">
+                        {{ __('Clients') }}
+                    </x-nav-link>
                 </div>
             </div>
 
@@ -78,10 +82,14 @@
             </x-responsive-nav-link>
 
             @can(\App\Enums\RoleEnum::Admin)
-                <x-responsive-nav-link :href="route('users.index')" :active="request()->routeIs('users.index')">
+                <x-responsive-nav-link :href="route('users.index')" :active="request()->routeIs('users.*')">
                     {{ __('Users') }}
                 </x-responsive-nav-link>
             @endcan
+
+            <x-responsive-nav-link :href="route('clients.index')" :active="request()->routeIs('clients.*')">
+                {{ __('Clients') }}
+            </x-responsive-nav-link>
         </div>
 
         <!-- Responsive Settings Options -->
