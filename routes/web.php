@@ -1,7 +1,7 @@
 <?php
 
 use App\Enums\RoleEnum;
-use App\Http\Controllers\{ClientController, ProfileController, UserController};
+use App\Http\Controllers\{ClientController, ProfileController, ProjectController, UserController};
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', fn () => view('welcome'));
@@ -16,6 +16,7 @@ Route::middleware('auth')->group(function () {
         ->middleware('role:' . RoleEnum::Admin->value);
 
     Route::resource('/clients', ClientController::class)->except('show');
+    Route::resource('/projects', ProjectController::class)->except('show');
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
