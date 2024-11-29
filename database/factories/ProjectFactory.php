@@ -18,7 +18,7 @@ class ProjectFactory extends Factory
      */
     public function definition(): array
     {
-        $users = User::query()->pluck('id');
+        $users = User::query()->notAdmin()->pluck('id');
         $clients = Client::query()->pluck('id');
 
         return [
