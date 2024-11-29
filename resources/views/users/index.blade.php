@@ -21,10 +21,7 @@
                                         #
                                     </th>
                                     <th class="px-6 py-3" scope="col">
-                                        First Name
-                                    </th>
-                                    <th class="px-6 py-3" scope="col">
-                                        Last Name
+                                        Name
                                     </th>
                                     <th class="px-6 py-3" scope="col">
                                         Email
@@ -44,10 +41,7 @@
                                             {{ $user->id }}
                                         </th>
                                         <td class="px-6 py-4">
-                                            {{ $user->first_name }}
-                                        </td>
-                                        <td class="px-6 py-4">
-                                            {{ $user->last_name }}
+                                            {{ $user->full_name }}
                                         </td>
                                         <td class="px-6 py-4">
                                             {{ $user->email }}
