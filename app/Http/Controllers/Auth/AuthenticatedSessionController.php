@@ -3,10 +3,10 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Auth\LoginRequest;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use App\Models\User;
+use App\Notifications\LoginNotification;
+use Illuminate\Http\{RedirectResponse, Request};
+use Illuminate\Support\Facades\{Auth, URL};
 use Illuminate\View\View;
 
 class AuthenticatedSessionController extends Controller
@@ -22,13 +22,25 @@ class AuthenticatedSessionController extends Controller
     /**
      * Handle an incoming authentication request.
      */
-    public function store(LoginRequest $request): RedirectResponse
+    public function store(Request $request): RedirectResponse
     {
-        $request->authenticate();
+        $request->validate(['email' => 'required|string|email']);
 
-        $request->session()->regenerate();
+        $user = User::query()->where(['email' => $request->input('email')])->first();
 
-        return redirect()->intended(route('dashboard', absolute: false));
+        if (is_null($user)) {
+            return back()->withErrors(['email' => 'No matching account found.']);
+        }
+
+        $link = URL::temporarySignedRoute(
+            name: 'login.token',
+            expiration: now()->addMinutes(5),
+            parameters: ['user' => $user->id],
+        );
+
+        $user->notify(new LoginNotification($link));
+
+        return back()->with(['status' => 'Please check your email for token.']);
     }
 
     /**
