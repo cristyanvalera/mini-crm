@@ -52,19 +52,21 @@
                                             >
                                                 Edit
                                             </a>
-                                            |
-                                            <form
-                                                class="inline-block"
-                                                method="post"
-                                                action="{{ route('users.destroy', $user) }}"
-                                                onsubmit="return confirm('Are you sure to delete this record? This action cannot be undome')"
-                                            >
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="text-red-500 hover:underline">
-                                                    Delete
-                                                </button>
-                                            </form>
+                                            @can(\App\Enums\PermissionEnum::DeleteUsers)
+                                                |
+                                                <form
+                                                    class="inline-block"
+                                                    method="post"
+                                                    action="{{ route('users.destroy', $user) }}"
+                                                    onsubmit="return confirm('Are you sure to delete this record? This action cannot be undome')"
+                                                >
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="text-red-500 hover:underline">
+                                                        Delete
+                                                    </button>
+                                                </form>
+                                            @endcan
                                         </td>
                                     </tr>
                                 @endforeach
