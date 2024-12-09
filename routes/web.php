@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\PermissionEnum;
 use App\Enums\RoleEnum;
 use App\Http\Controllers\{ClientController, ProfileController, ProjectController, TaskController, UserController};
 use Illuminate\Support\Facades\Route;
@@ -13,7 +14,7 @@ Route::get('/dashboard', function () {
 Route::middleware('auth')->group(function () {
     Route::resource('/users', UserController::class)
         ->except('show')
-        ->middleware('role:' . RoleEnum::Admin->value);
+        ->middleware('can:' . PermissionEnum::ManageUsers->value);
 
     Route::resource('/clients', ClientController::class)->except('show');
     Route::resource('/projects', ProjectController::class)->except('show');
