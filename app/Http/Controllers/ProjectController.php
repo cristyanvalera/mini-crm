@@ -2,16 +2,22 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\PermissionEnum;
 use App\Http\Requests\{StoreProjectRequest, UpdateProjectRequest};
 use App\Models\{Client, Project, User};
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\View\View;
 
 class ProjectController extends Controller
 {
     public function index(): View
     {
-        $projects = Project::query()->orderBy('id')->paginate(5);
+        $projects = Project::query()
+            ->select('id', 'title', 'deadline_at', 'status', 'user_id', 'client_id')
+            ->with(['user', 'client'])
+            ->orderBy('id')
+            ->paginate(5);
 
         return view('projects.index', compact('projects'));
     }
@@ -60,6 +66,8 @@ class ProjectController extends Controller
 
     public function destroy(Project $project): RedirectResponse
     {
+        Gate::authorize(PermissionEnum::DeleteProjects);
+
         $project->delete();
 
         return back();
