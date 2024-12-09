@@ -28,8 +28,8 @@ class StoreClientRequest extends FormRequest
             'company_name' => 'required',
             'company_address' => 'required',
             'company_city' => 'required|string',
-            'company_zip' => 'required|string|alpha_num:ascii',
-            'company_vat' => 'required|string|alpha_num:ascii',
+            'company_zip' => 'required|string|alpha_dash:ascii',
+            'company_vat' => 'required|string|alpha_dash:ascii',
         ];
     }
 }
