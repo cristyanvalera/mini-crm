@@ -1,7 +1,6 @@
 <?php
 
 use App\Enums\PermissionEnum;
-use App\Enums\RoleEnum;
 use App\Http\Controllers\{ClientController, ProfileController, ProjectController, TaskController, UserController};
 use Illuminate\Support\Facades\Route;
 

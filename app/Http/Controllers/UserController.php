@@ -47,7 +47,7 @@ class UserController extends Controller
 
     public function destroy(User $user): RedirectResponse
     {
-        Gate::authorize(PermissionEnum::ManageUsers);
+        Gate::authorize(PermissionEnum::DeleteUsers);
 
         $user->delete();
 
