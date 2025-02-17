@@ -19,6 +19,7 @@ class Project extends Model
     {
         return [
             'status' => StatusProject::class,
+            'deadline_at' => 'date',
         ];
     }
 

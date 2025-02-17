@@ -18,6 +18,7 @@ class Task extends Model
     {
         return [
             'status' => TaskStatus::class,
+            'deadline_at' => 'date',
         ];
     }
 
