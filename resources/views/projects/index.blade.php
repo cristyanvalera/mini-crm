@@ -50,7 +50,7 @@
                                             {{ $project->client->contact_name }}
                                         </td>
                                         <td class="px-6 py-4">
-                                            {{ $project->deadline_at }}
+                                            {{ $project->deadline_at->diffForHumans() }}
                                         </td>
                                         <td class="px-6 py-4">
                                             {{ $project->status->label() }}
