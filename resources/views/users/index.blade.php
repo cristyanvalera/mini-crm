@@ -27,6 +27,9 @@
                                         Email
                                     </th>
                                     <th class="px-6 py-3" scope="col">
+                                        Last Updated
+                                    </th>
+                                    <th class="px-6 py-3" scope="col">
                                         Action
                                     </th>
                                 </tr>
@@ -45,6 +48,9 @@
                                         </td>
                                         <td class="px-6 py-4">
                                             {{ $user->email }}
+                                        </td>
+                                        <td class="px-6 py-4">
+                                            {{ $user->updated_at->diffForHumans() }}
                                         </td>
                                         <td class="px-6 py-4">
                                             <a class="font-medium text-black  dark:text-blue-500 hover:underline"

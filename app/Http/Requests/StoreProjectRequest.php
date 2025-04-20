@@ -18,7 +18,7 @@ class StoreProjectRequest extends FormRequest
         return [
             'title' => 'required',
             'description' => 'required',
-            'deadline_at' => 'required|date',
+            'deadline_at' => 'required|date|after:today',
             'user_id' => 'required|exists:users,id',
             'client_id' => 'required|exists:clients,id',
             'status' => ['required', Rule::enum(StatusProject::class)],

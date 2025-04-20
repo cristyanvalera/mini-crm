@@ -33,7 +33,7 @@
                             <!-- Deadline -->
                             <div class="mt-4">
                                 <x-input-label for="deadline_at" :value="__('Deadline at')" />
-                                <x-text-input id="deadline_at" class="block mt-1 w-full" type="date" name="deadline_at" :value="old('deadline_at', $project->deadline_at)"  />
+                                <x-text-input id="deadline_at" class="block mt-1 w-full" type="date" name="deadline_at" :value="old('deadline_at', $project->deadline_at->format('Y-m-d'))"  />
                                 <x-input-error :messages="$errors->get('deadline_at')" class="mt-2 font-bold" />
                             </div>
 
@@ -44,7 +44,7 @@
                                     <option value="">{{ __('Select a user') }}</option>
                                     @foreach ($users as $user)
                                         <option value="{{ $user->id }}" @selected(old('user_id', $project->user_id) === $user->id)>
-                                            {{ $user->first_name }} {{ $user->last_name }}
+                                            {{ $user->full_name }}
                                         </option>
                                     @endforeach
                                 </select>
@@ -56,9 +56,9 @@
                                 <x-input-label for="client_id" :value="__('Client')" />
                                 <select name="client_id" id="client_id" class="block mt-1 w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm">
                                     <option value="">{{ __('Select a client') }}</option>
-                                    @foreach ($clients as $client)
-                                        <option value="{{ $client->id }}" @selected(old('client_id', $project->client_id) === $client->id)>
-                                            {{ $client->company_name }}
+                                    @foreach ($clients as $id => $companyName)
+                                        <option value="{{ $id }}" @selected(old('client_id', $project->client_id) === $id)>
+                                            {{ $companyName }}
                                         </option>
                                     @endforeach
                                 </select>

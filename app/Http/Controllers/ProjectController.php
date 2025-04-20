@@ -16,7 +16,7 @@ class ProjectController extends Controller
         $projects = Project::query()
             ->select('id', 'title', 'deadline_at', 'status', 'user_id', 'client_id')
             ->with(['user', 'client'])
-            ->orderBy('id')
+            ->latest('updated_at')
             ->paginate(5);
 
         return view('projects.index', compact('projects'));
@@ -26,7 +26,7 @@ class ProjectController extends Controller
     {
         $users = User::query()
             ->select('id', 'first_name', 'last_name')
-            ->where('email', '!=', 'admin@admin.com')
+            ->notAdmin()
             ->get();
 
         $clients = Client::query()
@@ -47,12 +47,12 @@ class ProjectController extends Controller
     {
         $users = User::query()
             ->select('id', 'first_name', 'last_name')
-            ->where('email', '!=', 'admin@admin.com')
+            ->notAdmin()
             ->get();
 
         $clients = Client::query()
             ->select('id', 'company_name')
-            ->get();
+            ->pluck('company_name', 'id');
 
         return view('projects.edit', compact('project', 'users', 'clients'));
     }
