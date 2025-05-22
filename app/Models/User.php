@@ -59,8 +59,8 @@ class User extends Authenticatable
         );
     }
 
-    public function scopeNotAdmin(Builder $query): Builder
+    public function scopeNotAdmin(Builder $query): void
     {
-        return $query->whereNot('email', value: 'admin@admin.com');
+        $query->where('email', '!=', 'admin@admin.com');
     }
 }

@@ -25,8 +25,8 @@ class ProjectController extends Controller
     public function create(): View
     {
         $users = User::query()
-            ->select('id', 'first_name', 'last_name')
             ->notAdmin()
+            ->select('id', 'first_name', 'last_name')
             ->get();
 
         $clients = Client::query()
