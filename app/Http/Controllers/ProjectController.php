@@ -31,7 +31,7 @@ class ProjectController extends Controller
 
         $clients = Client::query()
             ->select('id', 'company_name')
-            ->get();
+            ->pluck('company_name', 'id');
 
         return view('projects.create', compact('users', 'clients'));
     }
