@@ -3,10 +3,10 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Auth\LoginRequest;
 use App\Models\User;
 use App\Notifications\LoginNotification;
 use Illuminate\Http\{RedirectResponse, Request};
+use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Support\Facades\{Auth, URL};
 use Illuminate\View\View;
 
@@ -23,30 +23,29 @@ class AuthenticatedSessionController extends Controller
     /**
      * Handle an incoming authentication request.
      */
-    public function store(LoginRequest $request): RedirectResponse
+    public function store(Request $request): RedirectResponse|MailMessage
     {
-        $request->authenticate();
+        $request->validate(['email' => 'required|string|email']);
 
-        $request->session()->regenerate();
+        $user = User::query()->where(['email' => $request->input('email')])->first();
 
-        return redirect()->intended(route('dashboard', absolute: false));
+        if (is_null($user)) {
+            return back()->withErrors(['email' => 'No matching account found.']);
+        }
 
-        //$request->validate(['email' => 'required|string|email']);
+        $link = URL::temporarySignedRoute(
+            name: 'login.token',
+            expiration: now()->addMinutes(1),
+            parameters: ['user' => $user->id],
+        );
 
-        //$user = User::query()->where(['email' => $request->input('email')])->first();
 
-        // if (is_null($user)) {
-        //     return back()->withErrors(['email' => 'No matching account found.']);
-        // }
+        // For testing purposes, return the MailMessage
+        $notification = new LoginNotification($link);
 
-        // $link = URL::temporarySignedRoute(
-        //     name: 'login.token',
-        //     expiration: now()->addMinutes(5),
-        //     parameters: ['user' => $user->id],
-        // );
+        return $notification->toMail($user);
 
         // $user->notify(new LoginNotification($link));
-
         // return back()->with(['status' => 'Please check your email for token.']);
     }
 
