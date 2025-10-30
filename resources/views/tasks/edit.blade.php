@@ -75,7 +75,7 @@
                             <!-- Deadline -->
                             <div class="mt-4">
                                 <x-input-label for="deadline_at" :value="__('Deadline at')" />
-                                <x-text-input id="deadline_at" class="block mt-1 w-full" type="date" name="deadline_at" :value="old('deadline_at', $task->deadline_at)"  />
+                                <x-text-input id="deadline_at" class="block mt-1 w-full" type="date" name="deadline_at" :value="old('deadline_at', $task->deadline_at->format('Y-m-d'))"  />
                                 <x-input-error :messages="$errors->get('deadline_at')" class="mt-2 font-bold" />
                             </div>
 
@@ -95,6 +95,10 @@
 
                             <!-- Buttons -->
                             <div class="flex items-center justify-end mt-4">
+                                <x-link-button href="{{ url()->previous() }}">
+                                    {{ __('Back') }}
+                                </x-link-button>
+
                                 <x-primary-button class="ms-4">
                                     {{ __('Save') }}
                                 </x-primary-button>

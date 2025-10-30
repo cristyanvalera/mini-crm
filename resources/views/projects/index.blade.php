@@ -33,7 +33,7 @@
                                             {{ $project->user->full_name }}
                                         </td>
                                         <td class="px-6 py-4">
-                                            {{ $project->client->contact_name }}
+                                            {{ Str::limit($project->client->client_company, 40) }}
                                         </td>
                                         <td class="px-6 py-4">
                                             {{ $project->deadline_at->diffForHumans() }}

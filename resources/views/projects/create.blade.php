@@ -55,9 +55,9 @@
                                 <x-input-label for="client_id" :value="__('Client')" />
                                 <select name="client_id" id="client_id" class="block mt-1 w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm">
                                     <option value="">{{ __('Select a client') }}</option>
-                                    @foreach ($clients as $client)
-                                        <option value="{{ $client->id }}" @selected(old('client_id') === $client->id)>
-                                            {{ $client->company_name }}
+                                    @foreach ($clients as $key => $client)
+                                        <option value="{{ $key }}" @selected(old('client_id') === $key)>
+                                            {{ $client }}
                                         </option>
                                     @endforeach
                                 </select>
