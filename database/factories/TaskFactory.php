@@ -21,7 +21,7 @@ class TaskFactory extends Factory
             'client_id' => $clients->random(),
             'project_id' => $projects->random(),
             'deadline_at' => now()->addDays(rand(1, 30))->format('d-m-Y'),
-            'status' => fake()->randomElement(TaskStatus::cases())->value,
+            'status' => collect(TaskStatus::cases())->random()->value,
         ];
     }
 }
