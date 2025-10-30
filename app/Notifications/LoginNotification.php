@@ -21,6 +21,7 @@ class LoginNotification extends Notification implements ShouldQueue
     public function toMail(object $notifiable): MailMessage
     {
         return new MailMessage()
+            ->from('admin@admin.com', 'Cristyan')
             ->subject('Token for login')
             ->markdown('mail.login-notification', ['link' => $this->link]);
     }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Auth\LoginRequest;
 use App\Models\User;
 use App\Notifications\LoginNotification;
 use Illuminate\Http\{RedirectResponse, Request};
@@ -22,25 +23,31 @@ class AuthenticatedSessionController extends Controller
     /**
      * Handle an incoming authentication request.
      */
-    public function store(Request $request): RedirectResponse
+    public function store(LoginRequest $request): RedirectResponse
     {
-        $request->validate(['email' => 'required|string|email']);
+        $request->authenticate();
 
-        $user = User::query()->where(['email' => $request->input('email')])->first();
+        $request->session()->regenerate();
 
-        if (is_null($user)) {
-            return back()->withErrors(['email' => 'No matching account found.']);
-        }
+        return redirect()->intended(route('dashboard', absolute: false));
 
-        $link = URL::temporarySignedRoute(
-            name: 'login.token',
-            expiration: now()->addMinutes(5),
-            parameters: ['user' => $user->id],
-        );
+        //$request->validate(['email' => 'required|string|email']);
 
-        $user->notify(new LoginNotification($link));
+        //$user = User::query()->where(['email' => $request->input('email')])->first();
 
-        return back()->with(['status' => 'Please check your email for token.']);
+        // if (is_null($user)) {
+        //     return back()->withErrors(['email' => 'No matching account found.']);
+        // }
+
+        // $link = URL::temporarySignedRoute(
+        //     name: 'login.token',
+        //     expiration: now()->addMinutes(5),
+        //     parameters: ['user' => $user->id],
+        // );
+
+        // $user->notify(new LoginNotification($link));
+
+        // return back()->with(['status' => 'Please check your email for token.']);
     }
 
     /**
