@@ -6,18 +6,22 @@ use App\Enums\PermissionEnum;
 use App\Http\Requests\{StoreTaskRequest, UpdateTaskRequest};
 use App\Models\{Client, Project, Task, User};
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\{Cache, Gate};
 use Illuminate\View\View;
 
 class TaskController extends Controller
 {
     public function index(): View
     {
-        $tasks = Task::query()
-            ->select('id', 'title', 'user_id', 'client_id', 'deadline_at', 'status')
-            ->with('user:id,first_name,last_name', 'client:id,contact_name')
-            ->latest('updated_at')
-            ->paginate(5);
+        $tasks = Cache::remember(
+            key: 'tasks-page' . request('page', 1),
+            ttl: now()->addMinutes(30),
+            callback: fn () => Task::query()
+                ->select('id', 'title', 'user_id', 'client_id', 'deadline_at', 'status')
+                ->with('user:id,first_name,last_name', 'client:id,contact_name')
+                ->latest('updated_at')
+                ->paginate(5),
+        );
 
         return view('tasks.index', compact('tasks'));
     }
