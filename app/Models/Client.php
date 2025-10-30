@@ -4,18 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\{Model, SoftDeletes};
+use Illuminate\Database\Eloquent\Casts\Attribute;
 
-/**
- * @property int $id
- * @property string $contact_name
- * @property string $contact_email
- * @property string $contact_phone_number
- * @property string $company_name
- * @property string $company_address
- * @property string $company_city
- * @property string $company_zip
- * @property string $company_vat
- */
 class Client extends Model
 {
     /** @use HasFactory<\Database\Factories\ClientFactory> */
@@ -31,4 +21,11 @@ class Client extends Model
         'company_zip',
         'company_vat',
     ];
+
+    protected function clientCompany(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => "{$this->contact_name} ({$this->company_name})",
+        );
+    }
 }
